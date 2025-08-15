@@ -1,0 +1,28 @@
+<!doctype html><html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#0b0b0b"><title>星見ナビ JP</title>
+<style>
+body{background:#0b0b0b;color:#eaeaea;font-family:system-ui,sans-serif;margin:0}
+header,footer{padding:12px 16px}.badge{display:inline-block;padding:4px 8px;border:1px solid #555;border-radius:6px;margin-right:8px}
+.card{background:#141414;border:1px solid #2a2a2a;border-radius:10px;padding:14px;margin:12px 16px}
+button{background:#1f1f1f;color:#eaeaea;border:1px solid #333;border-radius:8px;padding:10px 12px}
+.hidden{display:none}
+a{color:#9bd}
+</style></head><body>
+<header><h1>星見ナビ JP</h1><div id="badges"></div></header>
+<main>
+<section class="card" id="tonight"></section>
+<section class="card" id="quests"></section>
+<section class="card" id="bingo"></section>
+<section class="card" id="photo-coach"></section>
+<section class="card" id="bundles"></section>
+<section class="card" id="postcard"></section>
+<section class="card hidden" id="car-window"><h2>車窓モード</h2>
+<p id="tts-line">停車中にお楽しみください。</p>
+<p><a href="tel:110">緊急通報（日本）</a></p>
+<button id="btn-tts">音声ガイドを再生</button></section>
+</main>
+<footer><a href="/legal/index.html">法務・安全</a> / 最終更新 <span id="lastmod">—</span></footer>
+<script type="module" src="/app.js"></script>
+</body></html>
