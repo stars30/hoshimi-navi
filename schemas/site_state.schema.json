@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "required": ["lastmod", "mode", "confidence", "tonight"],
+  "properties": {
+    "lastmod": { "type": "string" },
+    "mode": { "enum": ["normal", "freeze", "degrade"] },
+    "confidence": { "type": "number" },
+    "tonight": {
+      "type": "object",
+      "required": ["ovs", "safety"],
+      "properties": {
+        "ovs": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "safety": { "type": "integer", "minimum": 1, "maximum": 4 }
+      }
+    }
+  },
+  "additionalProperties": true
+}
