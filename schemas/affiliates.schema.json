@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "bundles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "items", "ok"],
+        "properties": {
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "items": { "type": "array", "items": { "type": "string" } },
+          "ok": { "type": "boolean" }
+        },
+        "additionalProperties": true
+      }
+    },
+    "catalog": { "type": "object" }
+  },
+  "additionalProperties": true
+}
