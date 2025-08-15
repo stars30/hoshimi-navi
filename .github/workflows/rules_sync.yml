@@ -7,7 +7,7 @@ on:
 
 jobs:
   sync:
-    if: contains(github.event.issue.title, '設定を変更する')
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.issue.title, '設定を変更する')
     runs-on: ubuntu-latest
     permissions:
       contents: write    # rules.yml をコミットするため
@@ -20,7 +20,7 @@ jobs:
 
       - name: Parse issue to rules.yml
         env:
-          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_BODY: ${{ github.event_name == 'issues' && github.event.issue.body || '' }}
         run: python tools/issue2rules.py
 
       - name: Commit rules.yml
