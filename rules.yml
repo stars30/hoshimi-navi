@@ -1,0 +1,12 @@
+mode: normal
+thresholds:
+  gold: {ovs_min: 85, safety_min: 3}
+  platinum: {ovs_min: 90, safety_min: 4, new_moon_window_days: 3}
+weights: {cloud_cover: -0.45, moon_alt_deg: -0.25, wind_mps: -0.10, humidity: -0.05, light_pollution: -0.10}
+affiliates:
+  price_caps: {low: 6000, mid: 15000, high: 35000}
+  categories:
+    - tripod
+    - wide_lens
+    - remote
+    - warm_gear
