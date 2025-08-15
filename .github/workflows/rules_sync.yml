@@ -1,19 +1,24 @@
 name: rules-sync
+
 on:
   issues:
     types: [opened, edited]
+  workflow_dispatch:
 
 jobs:
   sync:
     if: contains(github.event.issue.title, '設定を変更する')
     runs-on: ubuntu-latest
+    permissions:
+      contents: write    # rules.yml をコミットするため
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: '3.11'
 
-      - name: Parse issue → rules.yml
+      - name: Parse issue to rules.yml
         env:
           ISSUE_BODY: ${{ github.event.issue.body }}
         run: python tools/issue2rules.py
