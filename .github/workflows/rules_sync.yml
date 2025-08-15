@@ -2,35 +2,22 @@ name: rules-sync
 on:
   issues:
     types: [opened, edited]
+
 jobs:
   sync:
     if: contains(github.event.issue.title, '設定を変更する')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
       - name: Parse issue → rules.yml
         env:
           ISSUE_BODY: ${{ github.event.issue.body }}
-        run: |
-          python - <<'PY'
-import os, re, yaml, sys
-body=os.environ.get("ISSUE_BODY","")
-def pick(label, default):
-    m=re.search(rf"{label}:\s*([^\n]+)", body)
-    return (m.group(1).strip() if m else default)
-rules={
-  "mode": pick("モード","normal"),
-  "thresholds":{
-    "gold":{"ovs_min": int(pick("Gold OVS 最小値","85")), "safety_min":3},
-    "platinum":{"ovs_min": int(pick("Platinum OVS 最小値","90")), "safety_min":4, "new_moon_window_days":3}
-  },
-  "weights":{"cloud_cover":-0.45,"moon_alt_deg":-0.25,"wind_mps":-0.10,"humidity":-0.05,"light_pollution":-0.10},
-  "affiliates":{"price_caps":{"low":6000,"mid":15000,"high":35000},
-                "categories":[s.strip() for s in pick("アフィカテゴリ","tripod,wide_lens,remote,warm_gear").split(",")]}
-}
-open("rules.yml","w",encoding="utf-8").write(yaml.dump(rules, allow_unicode=True))
-print("Wrote rules.yml")
-PY
+        run: python tools/issue2rules.py
+
       - name: Commit rules.yml
         run: |
           git config user.name "rules-sync-bot"
