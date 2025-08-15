@@ -1,0 +1,13 @@
+{
+  "lastmod": "2025-08-16T14:25:00Z",
+  "mode": "normal",
+  "confidence": 0.92,
+  "tonight": {
+    "ovs": 88,
+    "safety": 4,
+    "moon_pct": 2.1,
+    "iss": { "visible": true, "dur_sec": 210 }
+  },
+  "badges": { "family_not_recommended": false, "uncertain": false },
+  "thresholds": { "platinum": { "ovs_min": 90, "safety_min": 4 } }
+}
