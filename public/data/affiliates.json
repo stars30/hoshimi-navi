@@ -1,0 +1,17 @@
+{
+  "bundles": [
+    {
+      "id": "kit_low",
+      "title": "入門セット(低価格)",
+      "items": ["tripod-A", "remote-A", "warm-A"],
+      "ok": true
+    },
+    {
+      "id": "kit_mid",
+      "title": "安定セット(中価格)",
+      "items": ["tripod-B", "remote-B", "warm-B"],
+      "ok": true
+    }
+  ],
+  "catalog": {}
+}
