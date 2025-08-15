@@ -2,6 +2,7 @@ name: nightly-build
 on:
   schedule: [{cron: "15 14 * * *"}]  # JST 23:15
   workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -9,7 +10,12 @@ jobs:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v5
-        with: { python-version: "3.11" }
+        with:
+          python-version: "3.11"
+
+      # 追加：出力先ディレクトリを事前に作成
+      - name: Prepare dirs
+        run: mkdir -p data public/data
 
       - name: Fetch public feeds
         run: python tools/fetch_public_feeds.py --out data/inputs.json
