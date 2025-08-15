@@ -1,0 +1,38 @@
+name: nightly-build
+on:
+  schedule: [{cron: "15 14 * * *"}]  # JST 23:15
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+
+      - name: Fetch public feeds
+        run: python tools/fetch_public_feeds.py --out data/inputs.json
+
+      - name: Compute OVS/Safety
+        run: python tools/compute_scores.py --rules rules.yml --in data/inputs.json --out public/data/site_state.json
+
+      - name: Validate JSON
+        run: python tools/validate_json.py --schema schemas/site_state.schema.json --data public/data/site_state.json
+
+      - name: Affiliate health check
+        run: python tools/check_links.py --config rules.yml --out public/data/affiliates.json || echo "AFFILIATE_DEGRADED=1" >> $GITHUB_ENV
+
+      - name: Health guard & rollback
+        run: python tools/health_guard.py --state public/data/site_state.json --prev public/data/site_state_prev.json
+
+      - name: Keep last success as prev
+        run: cp -f public/data/site_state.json public/data/site_state_prev.json || true
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          projectName: hoshimi-navi
+          directory: public
