@@ -13,5 +13,18 @@
       "ok": true
     }
   ],
-  "catalog": {}
+  "catalog": {
+    "tripod-A": {
+      "title": "軽量ミニ三脚",
+      "url": "https://example.com/tripodA"
+    },
+    "remote-A": {
+      "title": "スマホ用シャッターリモコン",
+      "url": "https://example.com/remoteA"
+    },
+    "warm-A": {
+      "title": "防寒手袋",
+      "url": "https://example.com/warmA"
+    }
+  }
 }
