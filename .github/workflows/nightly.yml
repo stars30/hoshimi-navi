@@ -1,10 +1,19 @@
 name: nightly-build
+
 on:
-  schedule: [{cron: "15 14 * * *"}]  # JST 23:15
+  # 毎晩の自動実行（JST 23:15）
+  schedule: [{ cron: "15 14 * * *" }]
+  # 手動実行
   workflow_dispatch:
+  # rules-sync が完了したら自動で起動（成功時のみ下の if で続行）
+  workflow_run:
+    workflows: ["rules-sync"]
+    types: [completed]
 
 jobs:
   build:
+    # rules-sync 由来の起動時は Success のときだけ実行する
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -13,7 +22,7 @@ jobs:
         with:
           python-version: "3.11"
 
-      # 追加：出力先ディレクトリを事前に作成
+      # 出力先ディレクトリを事前に作成
       - name: Prepare dirs
         run: mkdir -p data public/data
 
