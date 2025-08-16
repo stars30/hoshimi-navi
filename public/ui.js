@@ -17,9 +17,49 @@ function renderPhotoCoach(s){document.getElementById('photo-coach').innerHTML=`<
 function renderQuests(s){document.getElementById('quests').innerHTML=`<h2>Sky Quests</h2><ul>
 <li>夏の大三角を見つける</li>${s.tonight.iss?.visible?'<li>ISSを3分追尾</li>':''}</ul>`;}
 function renderBingo(){document.getElementById('bingo').innerHTML=`<h2>Star Bingo</h2><p>流れ星/人工衛星を見つけたら1タップ記録（ダミー）。</p>`;}
-function renderBundles(aff,unsafe){
-  const wrap=document.getElementById('bundles'); if(unsafe){wrap.innerHTML='<h2>買い物導線</h2><p>安全度が低いため表示を停止中。</p>'; return;}
-  const items=(aff.bundles||[]).filter(b=>b.ok).map(b=>`<li><strong>${b.title}</strong></li>`).join('');
-  wrap.innerHTML=`<h2>買い物導線</h2><ul>${items||'<li>今夜に合うバンドルはありません。</li>'}</ul>`;
+function renderBundles(aff, unsafe){
+  const wrap = document.getElementById('bundles');
+  if (!wrap) return;
+
+  // 安全度が低い夜は非表示（そのまま踏襲）
+  if (unsafe){
+    wrap.innerHTML = '<h2>買い物導線</h2><p>安全度が低いため表示を停止中。</p>';
+    return;
+  }
+
+  const bundles = (aff?.bundles || []).filter(b => b.ok !== false);
+  const catalog = aff?.catalog || {};
+
+  if (!bundles.length){
+    wrap.innerHTML = '<h2>買い物導線</h2><ul><li>今夜に合うバンドルはありません。</li></ul>';
+    return;
+  }
+
+  // 簡易エスケープ
+  const esc = (s='') => String(s)
+    .replaceAll('&','&amp;')
+    .replaceAll('<','&lt;')
+    .replaceAll('>','&gt;')
+    .replaceAll('"','&quot;')
+    .replaceAll("'",'&#039;');
+
+  // 各バンドルの中に、catalog から引いたアイテムリンクを並べる
+  const html = bundles.map(b => {
+    const title = esc(b.title || b.id || 'セット');
+
+    const itemsHtml = (b.items || []).map(id => {
+      const it   = catalog[id] || {};
+      const text = esc(it.title || id);
+      const href = it.url;
+
+      return href
+        ? `<li><a href="${esc(href)}" target="_blank" rel="noopener noreferrer sponsored">${text}</a></li>`
+        : `<li>${text}</li>`;
+    }).join('');
+
+    return `<li><strong>${title}</strong><ul>${itemsHtml}</ul></li>`;
+  }).join('');
+
+  wrap.innerHTML = `<h2>買い物導線</h2><ul>${html}</ul>`;
 }
 function renderPostcard(s){document.getElementById('postcard').innerHTML=`<h2>ご当地ポストカード</h2><p>星図と雲ヒートを端末内で合成（簡易表示）。</p>`;}
