@@ -1,0 +1,9 @@
+{
+  "tripod-A": { "title": "軽量三脚A", "price": 4980,  "url": "https://example.com/tripod-a" },
+  "remote-A": { "title": "スマホレリーズA", "price": 1580, "url": "https://example.com/remote-a" },
+  "warm-A":   { "title": "防寒グローブA",   "price": 980,  "url": "https://example.com/warm-a" },
+
+  "tripod-B": { "title": "安定三脚B", "price": 12800, "url": "https://example.com/tripod-b" },
+  "remote-B": { "title": "スマホレリーズB", "price": 2280,  "url": "https://example.com/remote-b" },
+  "warm-B":   { "title": "防寒ネックB", "price": 1680,  "url": "https://example.com/warm-b" }
+}
