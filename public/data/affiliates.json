@@ -25,6 +25,18 @@
     "warm-A": {
       "title": "防寒手袋",
       "url": "https://example.com/warmA"
+    },
+    "tripod-B": {
+      "title": "大型安定三脚",
+      "url": "https://example.com/tripodB"
+    },
+    "remote-B": {
+      "title": "高性能シャッター",
+      "url": "https://example.com/remoteB"
+    },
+    "warm-B": {
+      "title": "電熱グローブ",
+      "url": "https://example.com/warmB"
     }
   }
 }
